@@ -17,36 +17,47 @@ The project is being developed initially for two UBTECH Cruzr robots, Stormy and
 
 ## Current Capabilities
 
-The following functionality has been implemented and demonstrated on a Windows development computer:
+The following functionality has been implemented and demonstrated
+on a Windows development computer:
 
-- Locally hosted conversational AI using Ollama and Qwen 2.5 7B.
+- Locally hosted conversational AI using Ollama and Qwen2.5 7B.
 - Configurable robot identity, initially set to Stormy.
 - Library Assistant, Open Day Guide and experimental Interpreter profiles.
-- Session-based conversational context and profile switching.
-- Initial UniSC Moreton Bay campus information lookup.
+- Session-based conversation history and profile switching.
+- Verified UniSC Moreton Bay campus information lookup.
 - Basic safeguards against fabricated campus directions.
-- GPU-accelerated speech recognition using faster-whisper and Whisper large-v3.
-- Microphone-based interaction using the `/voice` command.
-- Keyboard-based interaction as an alternative.
+- GPU-accelerated speech recognition using Whisper large-v3.
+- Microphone interaction through the `/voice` command.
+- Australian text-to-speech using the Orpheus TTS model.
+- Distinct prototype voices: Delta (Stormy) and Angus (Shady).
+- Speech generation from campus knowledge and Ollama responses.
+- Controlled audio playback with manual approval.
+- Basic speech-text sanitisation and audio signal validation.
+- Keyboard interaction as an accessible alternative.
 
-**Current limitation:** Cruzr AI has not yet been integrated with physical Cruzr hardware. Speech responses, mapping and autonomous navigation are still under development.
+**Milestone 1 — Conversational Intelligence: Completed (local prototype).**
+
+**Current limitations:** Speech input and output require separate commands. Continuous hands-free interaction, physical Cruzr hardware
+integration, mapping and autonomous navigation are not yet implemented. Speech generation also requires further latency and reliability improvements.
 
 ## Planned Capabilities
 
-- Natural Australian text-to-speech.
+- Continuous, natural spoken conversation without manual commands.
+- Streaming text-to-speech and improved response latency.
+- Reliable audio validation and conversational interruption handling.
 - Multilingual speech interaction and translation.
-- Accessible communication interfaces.
-- ROS-based hardware integration.
-- Environmental mapping and localisation.
-- Obstacle detection and autonomous navigation.
-- Library assistance and approved campus wayfinding.
+- Accessible communication interfaces and user preferences.
+- ROS-based Cruzr hardware integration and robot behaviours.
+- Environmental mapping, localisation and obstacle avoidance.
+- Supervised autonomous navigation and approved library wayfinding.
 - Multi-robot operation and configurable deployment profiles.
+- Personality fine-tuning using methods such as QLoRA and preference optimisation.
 
 ## Development Milestones
 
 | Milestone | Description | Status |
 |---|---|---|
-| M1 | Conversational AI with reliable campus information | In progress |
+| M1 | Conversational AI with verified campus information | Completed — local prototype |
 | M2 | Voice interaction and basic robot integration | In progress |
 | M3 | Supervised autonomous navigation | Planned |
 | M4 | Integrated autonomous library assistant | Planned |
@@ -67,7 +78,8 @@ Available commands:
 
 | Command | Function |
 |---|---|
-| `/voice` | Record a spoken question and transcribe it |
+| `/voice` | Record a spoken question using Whisper and submit it to Cruzr AI |
+| `/speak` | Generate speech from the latest response using Orpheus, with manual playback approval |
 | `/profile` | Switch operating profiles |
 | `/reset` | Clear conversation history |
 | `/quit` | Exit Cruzr AI |
@@ -75,6 +87,7 @@ Available commands:
 ## Project Structure
 
 ```text
+
 CruzrAI/
 ├── main.py
 ├── profiles.py
@@ -82,14 +95,21 @@ CruzrAI/
 ├── campus_knowledge.py
 ├── campus_data.json
 ├── speech_input.py
+├── speech_output.py
 ├── test_whisper.py
+├── test_orpheus.py
+├── test_voices.py
+├── test_speech_output.py
+├── test_playback.py
 ├── requirements.txt
 ├── CHANGELOG.md
 ├── README.md
-├── requirements.txt
 ├── .gitignore
-└── docs/
-    └── INSTALLATION.md
+├── docs/
+│   └── INSTALLATION.md
+├── models/              # Local downloaded models (Git-ignored)
+└── recordings/          # Generated audio files (Git-ignored)
+
 ```
 
 ## Documentation

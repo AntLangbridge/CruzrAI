@@ -5,4 +5,6 @@ ROBOT_CONFIG = {
     "institution": "University of the Sunshine Coast",
     "campus": "Moreton Bay",
     "role": "University service robot",
+    "tts_engine": "orpheus",
+    "tts_voice": "delta",
 }

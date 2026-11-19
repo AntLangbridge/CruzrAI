@@ -1,5 +1,6 @@
 
 from speech_input import SpeechInput
+from speech_output import SpeechOutput
 from robot_config import ROBOT_CONFIG
 from campus_knowledge import campus_answer
 from profiles import BASE_RULES, PROFILES
@@ -38,7 +39,7 @@ def ask_model(messages):
 def main():
     print("\n=== Cruzr AI Prototype ===")
     print("Profiles: library, open_day, interpreter")
-    print("Commands: /voice, /profile, /reset, /quit\n")
+    print("Commands: /voice, /speak, /profile, /reset, /quit\n")
 
     active_profile = "library"
     speech = SpeechInput()
@@ -62,6 +63,7 @@ def main():
         }]
 
     history = new_history(active_profile)
+    last_response = None
 
     while True:
         user_input = input(f"\n[{active_profile}] You: ").strip()
@@ -78,6 +80,41 @@ def main():
                 continue
 
         if not user_input:
+            continue
+
+        if user_input.lower() == "/speak":
+            if not last_response:
+                print("Nothing to speak yet. Ask Stormy a question first.")
+                continue
+
+            try:
+                print("\nGenerating speech. This may take a moment...")
+
+                output = SpeechOutput(
+                    voice=ROBOT_CONFIG["tts_voice"]
+                )
+
+                result = output.save(
+                    text=last_response,
+                    output_path="recordings/latest_response.wav",
+                )
+
+                print(
+                    f"Speech generated in "
+                    f"{result['generation_time']:.2f} seconds."
+                )
+                print(f"Recording saved: {result['path']}")
+
+                output.play_file(
+                    result["path"],
+                    confirm=True,
+                )
+
+            except Exception as error:
+                import traceback
+                print(f"\nSpeech output error: {error}")
+                traceback.print_exc()
+
             continue
 
         if user_input.lower() == "/quit":
@@ -104,6 +141,7 @@ def main():
             verified_response = campus_answer(user_input)
 
             if verified_response is not None:
+                last_response = verified_response
                 print(f"\n{ROBOT_CONFIG['name']}: {verified_response}")
                 continue
         
@@ -115,6 +153,7 @@ def main():
             print(f"\nConnection/model error: {error}")
             continue
 
+        last_response = answer
         print(f"\n{ROBOT_CONFIG['name']}: {answer}")
         history.append({"role": "assistant", "content": answer})
 
