@@ -1,0 +1,26 @@
+{
+  "campus": "UniSC Moreton Bay",
+  "address": "1 Moreton Parade, Petrie, Queensland, Australia",
+  "locations": {
+    "student_services": {
+      "name": "Student Service Centre",
+      "building": "A1",
+      "floor": "Ground floor",
+      "source": "https://www.unisc.edu.au/current-students/student-central"
+    },
+    "library": {
+      "name": "UniSC Moreton Bay Library",
+      "building": "A1",
+      "floor": null,
+      "source": "https://www.unisc.edu.au/study/life-at-unisc/study-locations/unisc-moreton-bay"
+    },
+    "engineering_labs": {
+      "name": "Engineering laboratories",
+      "building": "A1",
+      "floor": "Level 2",
+      "source": "On-site student observation",
+      "status": "pending_independent_verification"
+    }
+  },
+  "events": {}
+}
