@@ -5,6 +5,34 @@ All notable changes to the Cruzr AI software project will be documented here.
 
 ## [Unreleased]
 
+### Added
+- Installed `faster-whisper`, `sounddevice` and `numpy` in a Python virtual environment.
+- Created `test_whisper.py` for standalone microphone recording and speech recognition.
+- Configured GPU-accelerated Whisper inference using an NVIDIA RTX 3090, CUDA 12.9 and cuDNN 9.28.
+- Tested Whisper `small` and `large-v3` models.
+- Successfully transcribed an Australian English test phrase using Whisper `large-v3`.
+
+### Testing
+- Confirmed microphone audio capture at 16 kHz.
+- Confirmed CUDA GPU detection and FP16 support.
+- Verified successful GPU inference after configuring CUDA and cuDNN libraries.
+- Observed improved recognition of Australian English and the robot name "Stormy" with `large-v3`.
+
+### Known Limitations
+- Speech recognition currently operates as a standalone test.
+- Microphone input is not yet connected to the conversational AI.
+- Text-to-speech has not yet been implemented.
+- CUDA and cuDNN paths are currently configured manually in the PowerShell session.
+
+### Planned
+- Integrate speech recognition with the main Cruzr AI application.
+- Implement speech synthesis using an Australian voice.
+- Introduce configurable microphone and audio settings.
+- Improve interpreter accuracy and language selection.
+- Introduce accessibility and communication preferences.
+- Develop integration with Cruzr hardware and ROS.
+
+
 ### Planned
 - Implement speech recognition and text-to-speech.
 - Improve interpreter accuracy and language selection.

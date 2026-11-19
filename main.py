@@ -1,4 +1,5 @@
 
+from speech_input import SpeechInput
 from robot_config import ROBOT_CONFIG
 from campus_knowledge import campus_answer
 from profiles import BASE_RULES, PROFILES
@@ -37,9 +38,10 @@ def ask_model(messages):
 def main():
     print("\n=== Cruzr AI Prototype ===")
     print("Profiles: library, open_day, interpreter")
-    print("Commands: /profile, /reset, /quit\n")
+    print("Commands: /voice, /profile, /reset, /quit\n")
 
     active_profile = "library"
+    speech = SpeechInput()
 
     def new_history(profile):
         identity = (
@@ -63,6 +65,17 @@ def main():
 
     while True:
         user_input = input(f"\n[{active_profile}] You: ").strip()
+
+        if user_input.lower() == "/voice":
+            try:
+                user_input = speech.listen()
+            except Exception as error:
+                print(f"\nSpeech recognition error: {error}")
+                continue
+
+            if not user_input:
+                print("No speech detected. Please try again")
+                continue
 
         if not user_input:
             continue
@@ -104,7 +117,6 @@ def main():
 
         print(f"\n{ROBOT_CONFIG['name']}: {answer}")
         history.append({"role": "assistant", "content": answer})
-
 
 
 if __name__== "__main__":

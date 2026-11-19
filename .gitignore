@@ -3,3 +3,18 @@ __pycache__/
 .venv/
 .env
 logs/
+
+# Local configuration and credentials
+.env.*
+*.key
+*.pem
+
+# Downloaded AI models and audio recordings
+models/
+recordings/
+*.wav
+*.mp3
+
+# Temporary files
+*.log
+.pytest_cache/
